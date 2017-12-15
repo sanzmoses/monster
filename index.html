@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Monster Slayer</title>
+    <script src="vue.js"></script>
+    <link rel="stylesheet" href="css/foundation.min.css">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div id="app">
+    <section class="row">
+        <div class="small-6 columns">
+            <h1 class="text-center" @click="showPlayer">YOU</h1>
+            <div class="healthbar">
+                <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;" :style="[playr, {backgroundColor: pColor}]">
+                    {{ player.health }}
+                </div>
+            </div>
+        </div>
+        <div class="small-6 columns">
+            <h1 class="text-center" @click="showMonster">MONSTER</h1>
+            <div class="healthbar">
+                <div class="healthbar text-center" style="margin: 0; color: white;" :style="[monstr, {backgroundColor: mColor}]">
+                    {{ monster.health }}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section v-show="show" class="row controls">
+        <div class="small-12 columns">
+            <button id="start-game" @click="start">START NEW GAME</button>
+        </div>
+    </section>
+
+    <section v-if="test" v-show="!show" class="row controls">
+        <div class="small-12 columns">
+            <input id="num" type="text" v-on:input="myNumber">
+            <button id="start-game" @click="hideshow">INPUT NUMBER</button>
+        </div>
+    </section>
+
+    <section v-show="game" class="row controls">
+        <div class="small-12 columns">
+            <input id="num" type="text" v-on:input="changeNum">
+            <button id="attack" @click="playerTurn('normal')">ATTACK</button>
+            <button :class="[specialAttack]" :disabled="special" @click="playerTurn('special')">SPECIAL ATTACK</button>
+            <button v-if="restart" @click="reset">PLAY AGAIN</button>
+            <button v-else id="give-up" @click="reset">GIVE UP</button>
+        </div>
+    </section>
+
+    <section v-show="game" class="row log">
+        <div class="small-12 columns">
+            <ul>
+                <li v-for="(log, key) in logs" 
+                :class="[log.turn]">
+                    {{ log.msg }}
+                </li>
+            </ul>
+        </div>
+    </section>
+
+</div>
+
+<script src="master.js"></script>
+</body>
+</html>
